@@ -399,10 +399,24 @@ public class SwerveSubsystem extends SubsystemBase {
     public void updateWheelPositions() {
         SwerveModuleState[] moudleStates = getSwerveModuleState(); // Current states of wheels
 
-        
+        SwerveModuleState[] fakeSpeedsReal = new SwerveModuleState[] {
+            new SwerveModuleState(5, moudleStates[0].angle),
+            new SwerveModuleState(5, moudleStates[1].angle),
+            new SwerveModuleState(5, moudleStates[2].angle),
+            new SwerveModuleState(5, moudleStates[3].angle),
+        };
+
+        SwerveModuleState[] fakeSpeedsDesired = new SwerveModuleState[] {
+            new SwerveModuleState(5, desiredModuleStates[0].angle),
+            new SwerveModuleState(5, desiredModuleStates[1].angle),
+            new SwerveModuleState(5, desiredModuleStates[2].angle),
+            new SwerveModuleState(5, desiredModuleStates[3].angle),
+        };
 
         publisherDesiredStates.set(desiredModuleStates);
         publisherRealStates.set(getSwerveModuleState());
+        publisherDesiredStatesFakeSpeeds.set(fakeSpeedsDesired);
+        publisherRealStatesFakeSpeeds.set(fakeSpeedsReal);
 
         // Physical / IRL values
         SmartDashboard.putNumberArray(
