@@ -19,7 +19,7 @@ public final class Configs{
         double drivingFactor = Constants.SwervePhysicalConstants.WHEEL_DIAMETER * Math.PI
                                * Constants.SwervePhysicalConstants.DRIVE_MOTOR_GEAR_RATIO; // TODO
         double turningFactor = 2 * Math.PI; // TODO
-        // double drivingVelocityFeedForward = 1 / (Constants.SwerveDriveConstants.k_DrivingMotorFreeSpeedRps); // TODO
+        double drivingVelocityFeedForward = 1 / (Constants.SwerveDriveConstants.k_DrivingMotorFreeSpeedRps); // TODO
 
         frontRightDrivingConfig
             .idleMode(IdleMode.kBrake)
@@ -28,6 +28,10 @@ public final class Configs{
         frontRightDrivingConfig.encoder 
             .positionConversionFactor(drivingFactor)
             .velocityConversionFactor(drivingFactor / 60.0);
+        frontRightDrivingConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .velocityFF(drivingVelocityFeedForward)
+            .outputRange(-1, 1);
             
         frontLeftDrivingConfig
             .idleMode(IdleMode.kBrake)
@@ -36,6 +40,10 @@ public final class Configs{
         frontLeftDrivingConfig.encoder 
             .positionConversionFactor(drivingFactor)
             .velocityConversionFactor(drivingFactor / 60.0);
+        frontLeftDrivingConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .velocityFF(drivingVelocityFeedForward)
+            .outputRange(-1, 1);
             
         backRightDrivingConfig
             .idleMode(IdleMode.kBrake)
@@ -44,6 +52,10 @@ public final class Configs{
         backRightDrivingConfig.encoder 
             .positionConversionFactor(drivingFactor)
             .velocityConversionFactor(drivingFactor / 60.0);
+        backRightDrivingConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .velocityFF(drivingVelocityFeedForward)
+            .outputRange(-1, 1);
 
         backLeftDrivingConfig
             .idleMode(IdleMode.kBrake)
@@ -52,6 +64,10 @@ public final class Configs{
         backLeftDrivingConfig.encoder 
             .positionConversionFactor(drivingFactor)
             .velocityConversionFactor(drivingFactor / 60.0);
+        backLeftDrivingConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .velocityFF(drivingVelocityFeedForward)
+            .outputRange(-1, 1);
 
         turningConfig
             .idleMode(IdleMode.kBrake)
@@ -60,6 +76,11 @@ public final class Configs{
             .inverted(true)
             .positionConversionFactor(turningFactor)
             .velocityConversionFactor(turningFactor / 60.0);
+        turningConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+            .outputRange(-1, 1)
+            .positionWrappingEnabled(true)
+            .positionWrappingInputRange(0, turningFactor);
     }
 }
 

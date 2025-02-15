@@ -27,7 +27,7 @@ public class SwerveModule {
 
     // Encoders
     private final RelativeEncoder driveEncoder;
-    // private final RelativeEncoder turnEncoder;
+    private final RelativeEncoder turnEncoder;
 
     // Feedforward
     private final SimpleMotorFeedforward driveFeedforward;
@@ -88,7 +88,7 @@ public class SwerveModule {
             PersistMode.kPersistParameters);
 
         driveEncoder = driveMotor.getEncoder();
-        // turnEncoder = turnMotor.getEncoder();
+        turnEncoder = turnMotor.getEncoder();
 
         // driveMotor.setInverted(driveMotorReversed); TODO
         // turnMotor.setInverted(turnMotorReversed); TODO
@@ -194,8 +194,7 @@ public class SwerveModule {
      * @return double of turn motor's encoder value converted
      */
     public double getTurnPosition() {
-        return getAbsoluteEncoderRad();
-        // return turnEncoder.getPosition();
+        return turnEncoder.getPosition();
     }
 
     /**
@@ -271,7 +270,7 @@ public class SwerveModule {
      */
     public void resetEncoders() {
         driveEncoder.setPosition(0);
-        // turnEncoder.setPosition(getAbsoluteEncoderRad());
+        turnEncoder.setPosition(getAbsoluteEncoderRad());
     }
 
     /**
@@ -281,7 +280,7 @@ public class SwerveModule {
     public void updateSmartDashboard() {
         // Position of Drive and Turn Motors
         SmartDashboard.putNumber(motorLocation + " driver encoder", driveEncoder.getPosition());
-        SmartDashboard.putNumber(motorLocation + " turn encoder", getTurnPosition());
+        SmartDashboard.putNumber(motorLocation + " turn encoder", turnEncoder.getPosition());
 
         // To change static voltage applied to the turn motor
         staticTurn = SmartDashboard.getNumber(motorLocation + " STATIC", 0);
