@@ -12,7 +12,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
@@ -88,6 +89,11 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // List of all desired module states
     private SwerveModuleState[] desiredModuleStates;
+
+    private StructArrayPublisher<SwerveModuleState> publisherDesiredStates = NetworkTableInstance.getDefault().getStructArrayTopic("MyDesiredStates", SwerveModuleState.struct).publish();
+    private StructArrayPublisher<SwerveModuleState> publisherRealStates = NetworkTableInstance.getDefault().getStructArrayTopic("MyRealStates", SwerveModuleState.struct).publish();
+    private StructArrayPublisher<SwerveModuleState> publisherDesiredStatesFakeSpeeds = NetworkTableInstance.getDefault().getStructArrayTopic("MyDesiredStatesFakeSpeeds", SwerveModuleState.struct).publish();
+    private StructArrayPublisher<SwerveModuleState> publisherRealStatesFakeSpeeds = NetworkTableInstance.getDefault().getStructArrayTopic("MyRealStatesFakeSpeeds", SwerveModuleState.struct).publish();
 
     /**
      * Inits SwereveSubsystem
@@ -363,6 +369,7 @@ public class SwerveSubsystem extends SubsystemBase {
         updateWheelPositions();
 
         if (DebuggingConstants.SWERVE_DRIVE_DEBUG) {
+
             // // Updates general robot data like pos
             updateSmartDashboard();
 
@@ -391,6 +398,11 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public void updateWheelPositions() {
         SwerveModuleState[] moudleStates = getSwerveModuleState(); // Current states of wheels
+
+        
+
+        publisherDesiredStates.set(desiredModuleStates);
+        publisherRealStates.set(getSwerveModuleState());
 
         // Physical / IRL values
         SmartDashboard.putNumberArray(
