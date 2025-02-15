@@ -89,10 +89,13 @@ public final class Constants {
     public static final boolean FRONT_RIGHT_DRIVE_REVERSED = false; // Check / Modify
     public static final boolean BACK_RIGHT_DRIVE_REVERSED = false; // Check / Modify
 
-    public static final double FREESPEED_RPS = (12.5 / (Units.metersToFeet(SwervePhysicalConstants.WHEEL_DIAMETER) * Math.PI)) 
+    public static final double k_FreeSpeedRpmNEO_V1_1 = 5676;
+    public static final double k_DrivingMotorFreeSpeedRps = k_FreeSpeedRpmNEO_V1_1 / 60;
+
+    public static final double FREESPEED_RPS = (k_DrivingMotorFreeSpeedRps * SwervePhysicalConstants.WHEEL_DIAMETER * Math.PI) 
                                                 * SwervePhysicalConstants.DRIVE_MOTOR_GEAR_RATIO;
-SwerveDriveConstants.;
-    public static final double k_DriveWheelFreeSpeedRps = FREESPEED_RPS / 8.14;
+
+   //public static final double k_DriveWheelFreeSpeedRps = FREESPEED_RPS / (SwervePhysicalConstants.WHEEL_DIAMETER * Math.PI);
 
     
     // PID Values

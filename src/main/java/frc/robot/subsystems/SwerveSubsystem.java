@@ -15,7 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Configs;
 import frc.robot.Constants.DebuggingConstants;
 import frc.robot.Constants.SwerveDriveConstants;
 import frc.robot.Constants.SwervePhysicalConstants;
@@ -28,9 +28,9 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveDriveConstants.FRONT_LEFT_DRIVE_MOTOR_PORT,
             SwerveTurnConstants.FRONT_LEFT_TURN_MOTOR_PORT,
             SwerveTurnConstants.FRONT_LEFT_TURN_ABSOLUTE_ENCODER_PORT,
-            SwerveDriveConstants.FRONT_LEFT_DRIVE_REVERSED,
-            SwerveTurnConstants.FRONT_LEFT_TURN_REVERSED,
             SwerveTurnConstants.FRONT_LEFT_TURN_ABSOLUTE_ENCODER_REVERSED,
+            Configs.frontLeftDrivingConfig,
+            Configs.turningConfig,
             SwerveTurnConstants.FRONT_LEFT_TURN_ABSOLUTE_ENCODER_OFFSET_ROTATION,
             SwerveTurnConstants.P_FRONT_LEFT_TURN,
             SwerveTurnConstants.I_FRONT_LEFT_TURN,
@@ -42,9 +42,9 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveDriveConstants.FRONT_RIGHT_DRIVE_MOTOR_PORT,
             SwerveTurnConstants.FRONT_RIGHT_TURN_MOTOR_PORT,
             SwerveTurnConstants.FRONT_RIGHT_TURN_ABSOLUTE_ENCODER_PORT,
-            SwerveDriveConstants.FRONT_RIGHT_DRIVE_REVERSED,
-            SwerveTurnConstants.FRONT_RIGHT_TURN_REVERSED,
             SwerveTurnConstants.FRONT_RIGHT_TURN_ABSOLUTE_ENCODER_REVERSED,
+            Configs.frontRightDrivingConfig,
+            Configs.turningConfig,
             SwerveTurnConstants.FRONT_RIGHT_TURN_ABSOLUTE_ENCODER_OFFSET_ROTATION,
             SwerveTurnConstants.P_FRONT_RIGHT_TURN,
             SwerveTurnConstants.I_FRONT_RIGHT_TURN,
@@ -56,9 +56,9 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveDriveConstants.BACK_LEFT_DRIVE_MOTOR_PORT,
             SwerveTurnConstants.BACK_LEFT_TURN_MOTOR_PORT,
             SwerveTurnConstants.BACK_LEFT_TURN_ABSOLUTE_ENCODER_PORT,
-            SwerveDriveConstants.BACK_LEFT_DRIVE_REVERSED,
-            SwerveTurnConstants.BACK_LEFT_TURN_REVERSED,
             SwerveTurnConstants.BACK_LEFT_TURN_ABSOLUTE_ENCODER_REVERSED,
+            Configs.backLeftDrivingConfig,
+            Configs.turningConfig,
             SwerveTurnConstants.BACK_LEFT_TURN_ABSOLUTE_ENCODER_OFFSET_ROTATION,
             SwerveTurnConstants.P_BACK_LEFT_TURN,
             SwerveTurnConstants.I_BACK_LEFT_TURN,
@@ -70,9 +70,9 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveDriveConstants.BACK_RIGHT_DRIVE_MOTOR_PORT,
             SwerveTurnConstants.BACK_RIGHT_TURN_MOTOR_PORT,
             SwerveTurnConstants.BACK_RIGHT_TURN_ABSOLUTE_ENCODER_PORT,
-            SwerveDriveConstants.BACK_RIGHT_DRIVE_REVERSED,
-            SwerveTurnConstants.BACK_RIGHT_TURN_REVERSED,
             SwerveTurnConstants.BACK_RIGHT_TURN_ABSOLUTE_ENCODER_REVERSED,
+            Configs.backRightDrivingConfig,
+            Configs.turningConfig,
             SwerveTurnConstants.BACK_RIGHT_TURN_ABSOLUTE_ENCODER_OFFSET_ROTATION,
             SwerveTurnConstants.P_BACK_RIGHT_TURN,
             SwerveTurnConstants.I_BACK_RIGHT_TURN,

@@ -2,9 +2,11 @@ package frc.robot.subsystems;
 
 // Imports
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.RelativeEncoder;
-
 import com.ctre.phoenix6.hardware.CANcoder;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -68,7 +70,7 @@ public class SwerveModule {
      */
     public SwerveModule(
             MotorLocation motorLocation, int driveMotorId, int turnMotorId, int absoluteEncoderId,
-            boolean driveMotorReversed, boolean turnMotorReversed, boolean absoluteEncoderReversed,
+            boolean absoluteEncoderReversed, SparkMaxConfig driveMaxConfig, SparkMaxConfig turnMaxConfig,
             double absoluteEncoderOffset, double pTurn, double iTurn, double dTurn, double staticTurn) {
 
         // Init variables
@@ -80,12 +82,17 @@ public class SwerveModule {
         driveMotor = new SparkMax(driveMotorId, MotorType.kBrushless);
         turnMotor = new SparkMax(turnMotorId, MotorType.kBrushless);
 
-        // driveMotor.setInverted(driveMotorReversed); TODO
-        // turnMotor.setInverted(turnMotorReversed); TODO
+        driveMotor.configure(driveMaxConfig, ResetMode.kResetSafeParameters, 
+            PersistMode.kPersistParameters);
+        turnMotor.configure(turnMaxConfig, ResetMode.kResetSafeParameters, 
+            PersistMode.kPersistParameters);
 
         driveEncoder = driveMotor.getEncoder();
         turnEncoder = turnMotor.getEncoder();
 
+        // driveMotor.setInverted(driveMotorReversed); TODO
+        // turnMotor.setInverted(turnMotorReversed); TODO
+        //summalummadomaklummaimasuperhumanwhatigottadotogetitthroughtouiminnovativeandim - eminem mini gun in fortnite
         // driveEncoder.setPositionConversionFactor(SwervePhysicalConstants.DRIVE_ENCODER_ROTATION_TO_METER); TODO
         // driveEncoder.setVelocityConversionFactor(SwervePhysicalConstants.DRIVE_ENCODER_RPM_TO_METER_PER_SECOND); TODO
 
@@ -213,9 +220,6 @@ public class SwerveModule {
             stop();
             return;
         }
-
-        // Finds optimal direction to rotate module (90 degrees turns at max)
-        state = SwerveModuleState.optimize(state, getState().angle);
 
         // Sets drive motor speeds
         if (SwerveDriveConstants.IS_USING_PID_DRIVE) {

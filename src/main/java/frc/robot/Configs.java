@@ -14,11 +14,12 @@ public final class Configs{
 
     // Turning Configs
     public static final SparkMaxConfig turningConfig = new SparkMaxConfig(); 
+    
     static {
         double drivingFactor = Constants.SwervePhysicalConstants.WHEEL_DIAMETER * Math.PI
                                * Constants.SwervePhysicalConstants.DRIVE_MOTOR_GEAR_RATIO; // TODO
         double turningFactor = 2 * Math.PI; // TODO
-        double drivingVelocityFeedForward = 1 / (Constants.SwerveDriveConstants.k_DriveWheelFreeSpeedRps); // TODO
+        double drivingVelocityFeedForward = 1 / (Constants.SwerveDriveConstants.k_DrivingMotorFreeSpeedRps); // TODO
 
         frontRightDrivingConfig
             .idleMode(IdleMode.kBrake)
