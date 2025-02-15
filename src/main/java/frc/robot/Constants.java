@@ -165,20 +165,20 @@ public final class Constants {
         * 2 * Math.PI; // Check / Modify
 
     // PID Values
-    public static final double P_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.5 : 0.28;
-    public static final double P_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.50 : 0.267;
-    public static final double P_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.5 : 0.36;
-    public static final double P_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.5 : 0.366;
+    public static final double P_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.885 : 0.28;
+    public static final double P_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.87 : 0.267;
+    public static final double P_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.89 : 0.36;
+    public static final double P_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.85 : 0.366;
 
-    public static final double I_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
-    public static final double I_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
-    public static final double I_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
-    public static final double I_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
+    public static final double I_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.3 : 0;
+    public static final double I_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.3 : 0;
+    public static final double I_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.3 : 0;
+    public static final double I_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.3 : 0;
 
-    public static final double D_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
-    public static final double D_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
-    public static final double D_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
-    public static final double D_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0;
+    public static final double D_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.11 : 0;
+    public static final double D_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0.1 : 0;
+    public static final double D_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.115 : 0;
+    public static final double D_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.1 : 0;
 
     public static final double STATIC_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.4;
     public static final double STATIC_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.45;
@@ -196,7 +196,7 @@ public final class Constants {
     public static final int DRIVER_FIELD_ORIENTED_BUTTON_IDX = 1; // Check
 
     public static final int DRIVER_Y_AXIS_INVERTED = 1;
-    public static final int DRIVER_X_AXIS_INVERTED = -1;
+    public static final int DRIVER_X_AXIS_INVERTED = 1;
     public static final int DRIVER_ROT_AXIS_INVERTED = 1;
 
     public static final double DRIVER_DEADBAND = 0.25; // Modify

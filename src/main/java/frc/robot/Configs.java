@@ -5,6 +5,8 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import frc.robot.Constants.SwervePhysicalConstants;
+
 public final class Configs{
     // Driving Configs
     public static final SparkMaxConfig frontRightDrivingConfig = new SparkMaxConfig();
@@ -72,15 +74,15 @@ public final class Configs{
         turningConfig
             .idleMode(IdleMode.kBrake)
             .smartCurrentLimit(20);
-        turningConfig.absoluteEncoder
-            .inverted(true)
-            .positionConversionFactor(turningFactor)
-            .velocityConversionFactor(turningFactor / 60.0);
-        turningConfig.closedLoop
-            .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-            .outputRange(-1, 1)
-            .positionWrappingEnabled(true)
-            .positionWrappingInputRange(0, turningFactor);
+        turningConfig.encoder
+            // .inverted(true)
+            .positionConversionFactor(SwervePhysicalConstants.TURN_ENCODER_ROTATION_TO_RADIANS)
+            .velocityConversionFactor(SwervePhysicalConstants.TURN_ENCODER_RPM_TO_METER_PER_SECOND);
+        // turningConfig.closedLoop
+        //     .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+        //     .outputRange(-1, 1)
+        //     .positionWrappingEnabled(true)
+        //     .positionWrappingInputRange(0, turningFactor);
     }
 }
 

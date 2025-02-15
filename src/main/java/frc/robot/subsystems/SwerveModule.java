@@ -130,6 +130,7 @@ public class SwerveModule {
     public double getAbsoluteEncoderRad() {
         // Gets raw value of absolute encoder (%)
         double angle = absoluteEncoder.getPosition().getValueAsDouble();
+        // angle = absoluteEncoder
 
         // angle = absoluteEncoder.getVelocity().getValue() /
         // RobotController.getCurrent5V();
@@ -137,7 +138,7 @@ public class SwerveModule {
         angle *= 2.0 * Math.PI;
 
         // Apply Offset
-        angle -= absoluteEncoderOffsetRad;
+        // angle -= absoluteEncoderOffsetRad;
 
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
     }

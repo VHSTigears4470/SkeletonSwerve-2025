@@ -49,7 +49,7 @@ public class RobotContainer {
                                                 () -> m_driverController.getRawAxis(IOConstants.DRIVER_Y_AXIS),
                                                 () -> m_driverController.getRawAxis(IOConstants.DRIVER_X_AXIS),
                                                 () -> m_driverController.getRawAxis(IOConstants.DRIVER_ROT_AXIS),
-                                                () -> true));
+                                                () -> false));
                 configureBindings();
         }
 
