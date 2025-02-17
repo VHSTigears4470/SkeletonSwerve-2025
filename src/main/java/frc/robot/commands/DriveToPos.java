@@ -20,7 +20,7 @@ public class DriveToPos extends Command {
     private final double xSpd, ySpd, turningSpd;
     private final boolean fieldOriented;
     private Pose2d finalPose;
-    private final double threshold = 0.1;
+    private final double threshold = 0.05;
     private Transform2d translation;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
@@ -34,7 +34,7 @@ public class DriveToPos extends Command {
      */
     public DriveToPos(SwerveSubsystem swerveSubsystem) {
         this.swerveSubsystem = swerveSubsystem;
-        xSpd = 0.4;
+        xSpd = -0.4;
         ySpd = 0.0;
         turningSpd = 0.0;
         fieldOriented = false;

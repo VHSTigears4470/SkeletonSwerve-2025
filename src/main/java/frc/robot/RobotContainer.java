@@ -7,6 +7,7 @@ package frc.robot;
 
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.SwervePhysicalConstants;
+import frc.robot.commands.DriveToPos;
 import frc.robot.commands.SwerveJoystickCommand;
 import frc.robot.commands.TestDrivingMotors;
 import frc.robot.commands.TestSetPosCommand;
@@ -15,7 +16,7 @@ import frc.robot.commands.TestTurningMotors;
 import frc.robot.subsystems.SwerveSubsystem;
 
 import edu.wpi.first.math.geometry.Pose2d;
-
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -101,6 +102,13 @@ public class RobotContainer {
          * @return the command to run in autonomous
          */
         public Command getAutonomousCommand() {
+                return new SequentialCommandGroup(
+                        new InstantCommand(
+                                () -> m_swerveSub.resetOdometry(new Pose2d(0, 0, new Rotation2d(0))),
+                                m_swerveSub
+                        ),
+                        new DriveToPos(m_swerveSub)
+                );
                 /*
                  * // Moves straight one meter -> then straight and left one meter -> then
                  * rotates 180 degrees
@@ -157,7 +165,7 @@ public class RobotContainer {
                  * swerveControllerCommand,
                  * new InstantCommand(() -> m_swerveSub.stopModules()));
                  */
-                return new InstantCommand();
+                // return new InstantCommand();
         }
 
         // Presets
@@ -323,7 +331,7 @@ public class RobotContainer {
                 m_driverController.y().and(m_driverController.leftTrigger()).whileTrue(
                                 new TestSwerveJoystickCommand(
                                                 m_swerveSub,
-                                                () -> (double) 0.4,
+                                                () -> (double) -0.4,
                                                 () -> (double) 0.0,
                                                 () -> (double) 0.0,
                                                 () -> (boolean) false,
@@ -338,7 +346,7 @@ public class RobotContainer {
                 m_driverController.a().and(m_driverController.leftTrigger()).whileTrue(
                                 new TestSwerveJoystickCommand(
                                                 m_swerveSub,
-                                                () -> (double) -0.4,
+                                                () -> (double) 0.4,
                                                 () -> (double) 0.0,
                                                 () -> (double) 0.0,
                                                 () -> (boolean) false,
