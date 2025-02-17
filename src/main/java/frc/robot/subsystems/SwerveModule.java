@@ -265,7 +265,7 @@ public class SwerveModule {
      * @param speed of motor in meters per second (m/s)
      */
     public void testDriveMotors(double speed) {
-        driveMotor.set(speed + Math.signum(speed) * staticDrive);
+        driveMotor.set(speed + staticDrive);
     }
 
     /**
@@ -275,7 +275,7 @@ public class SwerveModule {
      */
     public void testTurnMotors(double position) {
         double voltage = turnPidController.calculate(getTurnPosition(), position);
-        turnMotor.setVoltage(voltage + Math.signum(voltage) * staticTurn);
+        turnMotor.setVoltage(voltage + staticTurn);
     }
 
     /**

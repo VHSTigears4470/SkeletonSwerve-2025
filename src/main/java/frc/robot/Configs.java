@@ -50,7 +50,7 @@ public final class Configs{
         backRightDrivingConfig
             .idleMode(IdleMode.kBrake)
             .smartCurrentLimit(50)
-            .inverted(false);
+            .inverted(true);
         backRightDrivingConfig.encoder 
             .positionConversionFactor(drivingFactor)
             .velocityConversionFactor(drivingFactor / 60.0);
@@ -73,7 +73,8 @@ public final class Configs{
 
         turningConfig
             .idleMode(IdleMode.kBrake)
-            .smartCurrentLimit(20);
+            .smartCurrentLimit(20)
+            .inverted(true);
         turningConfig.encoder
             // .inverted(true)
             .positionConversionFactor(SwervePhysicalConstants.TURN_ENCODER_ROTATION_TO_RADIANS)
