@@ -233,7 +233,8 @@ public class SwerveModule {
         }
 
         // Sets turn motor speeds with PID and StaticTurn
-        turnMotor.setVoltage(turnPidController.calculate(getTurnPosition(), state.angle.getRadians()) + staticTurn);
+        double voltage = turnPidController.calculate(getTurnPosition(), state.angle.getRadians());
+        turnMotor.setVoltage(voltage + Math.signum(voltage) * staticTurn);
 
         // Updates desired state
         desiredState = state;
@@ -262,7 +263,8 @@ public class SwerveModule {
      * @param position is where the turn wheel should be rotated (in radians)
      */
     public void testTurnMotors(double position) {
-        turnMotor.setVoltage(turnPidController.calculate(getTurnPosition(), position) + staticTurn);
+        double voltage = turnPidController.calculate(getTurnPosition(), position);
+        turnMotor.setVoltage(voltage + Math.signum(voltage) * staticTurn);
     }
 
     /**
@@ -280,8 +282,8 @@ public class SwerveModule {
      */
     public void updateSmartDashboard() {
         // Position of Drive and Turn Motors
-        SmartDashboard.putNumber(motorLocation + " driver encoder", driveEncoder.getPosition());
-        SmartDashboard.putNumber(motorLocation + " turn encoder", turnEncoder.getPosition());
+        SmartDashboard.putNumber(motorLocation + " driver encoder", getDrivePosition());
+        SmartDashboard.putNumber(motorLocation + " turn encoder", getTurnPosition());
 
         // To change static voltage applied to the turn motor
         staticTurn = SmartDashboard.getNumber(motorLocation + " STATIC", 0);
