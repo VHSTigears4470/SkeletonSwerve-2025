@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
+import com.revrobotics.jni.CANSparkJNI;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -10,18 +12,25 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Constants.DebuggingConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.SwervePhysicalConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class DriveToPos extends Command {
+public class DriveToPos_UsingEncoder extends Command {
+    // Create subsystem
     private final SwerveSubsystem swerveSubsystem;
+
+    // Initialize movement variables
     private final double xSpd, ySpd, turningSpd;
     private final boolean fieldOriented;
-    private Pose2d finalPose;
+    private double finalPose;
     private final double threshold = 0.05;
+    private final int index;
     private Transform2d translation;
+    
+    // Limiting movement
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
     /**
@@ -32,12 +41,17 @@ public class DriveToPos extends Command {
      * @param turningSpdFunction turning speed (rotation) not angle control
      * @param fieldOrientedFunction field orientation (true for field orientated, false for robot orientated)
      */
-    public DriveToPos(SwerveSubsystem swerveSubsystem) {
+    public DriveToPos_UsingEncoder(SwerveSubsystem swerveSubsystem) {
         this.swerveSubsystem = swerveSubsystem;
-        xSpd = -0.4;
-        ySpd = 0.0;
+
+        // tSets Movement values
+        xSpd = -0.4; // inversed bc when
+        ySpd = 0.0; 
         turningSpd = 0.0;
+        index = 3;
+        
         fieldOriented = false;
+
         translation = new Transform2d(5, 0 , new Rotation2d(0));
         this.xLimiter = new SlewRateLimiter(SwervePhysicalConstants.TELE_DRIVE_MAX_ACCELERATION_UNIT_PER_SECOND);
         this.yLimiter = new SlewRateLimiter(SwervePhysicalConstants.TELE_DRIVE_MAX_ACCELERATION_UNIT_PER_SECOND);
@@ -47,12 +61,13 @@ public class DriveToPos extends Command {
 
     @Override
     public void initialize() {
-        finalPose = swerveSubsystem.getPose().plus(translation);
+        finalPose = (swerveSubsystem.getSwerveModulePosistion()[index].distanceMeters) + translation.getX();
         SmartDashboard.putString("Drive Mode", "Default / Field Oriented"); // Helps understand which command swerve drive is using
     }
 
     @Override
     public void execute() {
+        
         // 1. Get real-time joystick inputs
         double xSpeed = IOConstants.DRIVER_X_AXIS_INVERTED * xSpd;
         double ySpeed = IOConstants.DRIVER_Y_AXIS_INVERTED * ySpd;
@@ -100,8 +115,8 @@ public class DriveToPos extends Command {
 
     @Override
     public boolean isFinished() {
-        Pose2d distancePose = swerveSubsystem.getPose().relativeTo(finalPose);
-        double distance = Math.sqrt(distancePose.getX() * distancePose.getX() + distancePose.getY() * distancePose.getY());
-        return distance < threshold;
+        double current = (swerveSubsystem.getSwerveModulePosistion()[index].distanceMeters);
+        double distance = current - finalPose;
+        return Math.abs(distance) < threshold;
     }
 }

@@ -7,7 +7,7 @@ package frc.robot;
 
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.SwervePhysicalConstants;
-import frc.robot.commands.DriveToPos;
+import frc.robot.commands.DriveToPos_UsingPose;
 import frc.robot.commands.SwerveJoystickCommand;
 import frc.robot.commands.TestDrivingMotors;
 import frc.robot.commands.TestSetPosCommand;
@@ -107,7 +107,7 @@ public class RobotContainer {
                                 () -> m_swerveSub.resetOdometry(new Pose2d(0, 0, new Rotation2d(0))),
                                 m_swerveSub
                         ),
-                        new DriveToPos(m_swerveSub)
+                        new DriveToPos_UsingPose(m_swerveSub)
                 );
                 /*
                  * // Moves straight one meter -> then straight and left one meter -> then
