@@ -89,6 +89,11 @@ public final class Constants {
     public static final boolean FRONT_RIGHT_DRIVE_REVERSED = false; // Check / Modify
     public static final boolean BACK_RIGHT_DRIVE_REVERSED = false; // Check / Modify
 
+    public static final double STATIC_BACK_LEFT_DRIVE = DebuggingConstants.IS_IN_AIR ? 0 : 0;
+    public static final double STATIC_FRONT_LEFT_DRIVE = DebuggingConstants.IS_IN_AIR ? 0 : 0;
+    public static final double STATIC_FRONT_RIGHT_DRIVE = DebuggingConstants.IS_IN_AIR ? 0 : 0;
+    public static final double STATIC_BACK_RIGHT_DRIVE = DebuggingConstants.IS_IN_AIR ? 0 : 0;
+
     public static final double k_FreeSpeedRpmNEO_V1_1 = 5676;
     public static final double k_DrivingMotorFreeSpeedRps = k_FreeSpeedRpmNEO_V1_1 / 60;
 
@@ -180,10 +185,10 @@ public final class Constants {
     public static final double D_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.115 : 0;
     public static final double D_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0.1 : 0;
 
-    public static final double STATIC_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.4;
-    public static final double STATIC_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.45;
-    public static final double STATIC_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.45;
-    public static final double STATIC_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.38;
+    public static final double STATIC_BACK_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.0;
+    public static final double STATIC_FRONT_LEFT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.0;
+    public static final double STATIC_FRONT_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.0;
+    public static final double STATIC_BACK_RIGHT_TURN = DebuggingConstants.IS_IN_AIR ? 0 : 0.0;
 
   }
 

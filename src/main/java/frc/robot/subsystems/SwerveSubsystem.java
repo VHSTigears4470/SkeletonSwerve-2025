@@ -38,7 +38,8 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveTurnConstants.P_FRONT_LEFT_TURN,
             SwerveTurnConstants.I_FRONT_LEFT_TURN,
             SwerveTurnConstants.D_FRONT_LEFT_TURN,
-            SwerveTurnConstants.STATIC_FRONT_LEFT_TURN);
+            SwerveTurnConstants.STATIC_FRONT_LEFT_TURN,
+            SwerveDriveConstants.STATIC_FRONT_LEFT_DRIVE);
 
     private final SwerveModule frontRight = new SwerveModule(
             SwervePhysicalConstants.MotorLocation.FRONT_RIGHT,
@@ -54,7 +55,8 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveTurnConstants.P_FRONT_RIGHT_TURN,
             SwerveTurnConstants.I_FRONT_RIGHT_TURN,
             SwerveTurnConstants.D_FRONT_RIGHT_TURN,
-            SwerveTurnConstants.STATIC_FRONT_RIGHT_TURN);
+            SwerveTurnConstants.STATIC_FRONT_RIGHT_TURN,
+            SwerveDriveConstants.STATIC_FRONT_RIGHT_DRIVE);
 
     private final SwerveModule backLeft = new SwerveModule(
             SwervePhysicalConstants.MotorLocation.BACK_LEFT,
@@ -70,7 +72,8 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveTurnConstants.P_BACK_LEFT_TURN,
             SwerveTurnConstants.I_BACK_LEFT_TURN,
             SwerveTurnConstants.D_BACK_LEFT_TURN,
-            SwerveTurnConstants.STATIC_BACK_LEFT_TURN);
+            SwerveTurnConstants.STATIC_BACK_LEFT_TURN,
+            SwerveDriveConstants.STATIC_BACK_LEFT_DRIVE);
 
     private final SwerveModule backRight = new SwerveModule(
             SwervePhysicalConstants.MotorLocation.BACK_RIGHT,
@@ -86,7 +89,8 @@ public class SwerveSubsystem extends SubsystemBase {
             SwerveTurnConstants.P_BACK_RIGHT_TURN,
             SwerveTurnConstants.I_BACK_RIGHT_TURN,
             SwerveTurnConstants.D_BACK_RIGHT_TURN,
-            SwerveTurnConstants.STATIC_BACK_RIGHT_TURN);
+            SwerveTurnConstants.STATIC_BACK_RIGHT_TURN,
+            SwerveDriveConstants.STATIC_BACK_RIGHT_DRIVE);
 
     // Gyro
     private final AHRS gyro = new AHRS(NavXComType.kMXP_SPI);

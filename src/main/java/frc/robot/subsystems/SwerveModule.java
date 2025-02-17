@@ -36,6 +36,7 @@ public class SwerveModule {
     private final PIDController turnPidController;
     private final PIDController drivePidController;
     private double staticTurn; // Static voltage for the turning wheel
+    private double staticDrive; // Static voltage for the turning wheel
 
     // Absolute Encoder and their Settings
     private final CANcoder absoluteEncoder;
@@ -75,7 +76,7 @@ public class SwerveModule {
             MotorLocation motorLocation, int driveMotorId, int turnMotorId, int absoluteEncoderId,
             boolean absoluteEncoderReversed, boolean driveEncoderReversed, boolean turnEncoderReversed,
             SparkMaxConfig driveMaxConfig, SparkMaxConfig turnMaxConfig,
-            double absoluteEncoderOffset, double pTurn, double iTurn, double dTurn, double staticTurn) {
+            double absoluteEncoderOffset, double pTurn, double iTurn, double dTurn, double staticTurn, double staticDrive) {
 
         // Init variables
         this.motorLocation = motorLocation;
@@ -124,9 +125,11 @@ public class SwerveModule {
         SmartDashboard.putData(motorLocation + " turn PID", turnPidController);
         SmartDashboard.putData(motorLocation + " drive PID", drivePidController);
 
-        // Init Smartdashboard values used to modify Static Turn
+        // Init Smartdashboard values used to modify Static Turn & Drive
         this.staticTurn = staticTurn;
-        SmartDashboard.putNumber(motorLocation + " STATIC", this.staticTurn);
+        SmartDashboard.putNumber(motorLocation + " STATIC TURN", this.staticTurn);
+        this.staticDrive = staticDrive;
+        SmartDashboard.putNumber(motorLocation + " STATIC DRIVE", this.staticDrive);
     }
 
     /**
@@ -236,7 +239,8 @@ public class SwerveModule {
                     + drivePidController.calculate(state.speedMetersPerSecond));
         } else {
             // Calculates speed using max speed
-            driveMotor.set(state.speedMetersPerSecond / SwervePhysicalConstants.PHYSICAL_MAX_SPEED_METER_PER_SECOND);
+            double speed = state.speedMetersPerSecond / SwervePhysicalConstants.PHYSICAL_MAX_SPEED_METER_PER_SECOND;
+            driveMotor.set(speed + Math.signum(speed) * staticDrive);
         }
 
         // Sets turn motor speeds with PID and StaticTurn
@@ -261,7 +265,7 @@ public class SwerveModule {
      * @param speed of motor in meters per second (m/s)
      */
     public void testDriveMotors(double speed) {
-        turnMotor.set(SwervePhysicalConstants.PHYSICAL_MAX_SPEED_METER_PER_SECOND);
+        driveMotor.set(speed + Math.signum(speed) * staticDrive);
     }
 
     /**
@@ -293,10 +297,24 @@ public class SwerveModule {
         SmartDashboard.putNumber(motorLocation + " turn encoder", getTurnPosition());
         SmartDashboard.putNumber(motorLocation + " absolute encoder", getAbsoluteEncoderRad());
 
-        // To change static voltage applied to the turn motor
-        staticTurn = SmartDashboard.getNumber(motorLocation + " STATIC", 0);
-        SmartDashboard.putNumber(motorLocation + " STATIC", staticTurn);
-        staticTurn = SmartDashboard.getNumber(motorLocation + " STATIC", 0);
+        // To change static voltage applied to the turn and drive motor
+        staticTurn = SmartDashboard.getNumber(motorLocation + " STATIC TURN", 0);
+        SmartDashboard.putNumber(motorLocation + " STATIC TURN", staticTurn);
+        staticTurn = SmartDashboard.getNumber(motorLocation + " STATIC TURN", 0);
+
+        staticDrive = SmartDashboard.getNumber(motorLocation + " STATIC DRIVE", 0);
+        if(staticDrive > 1.0) {
+            staticDrive = 1;
+        } else if(staticDrive < -1.0) {
+            staticDrive = -1;
+        }
+        SmartDashboard.putNumber(motorLocation + " STATIC DRIVE", staticDrive);
+        staticDrive = SmartDashboard.getNumber(motorLocation + " STATIC DRIVE", 0);
+        if(staticDrive > 1.0) {
+            staticDrive = 1;
+        } else if(staticDrive < -1.0) {
+            staticDrive = -1;
+        }
 
         // Prints both current and desired speeds of the drive wheels
         // System.out.printf("21%s", (motorLocation + " : curr = "));
