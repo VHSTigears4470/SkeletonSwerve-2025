@@ -41,6 +41,9 @@ public class SwerveModule {
     private final CANcoder absoluteEncoder;
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
+    
+    private final boolean driveEncoderReversed;
+    private final boolean turnEncoderReversed;
 
     // Motor Ids (used mostly for debugging)
     private final int absoluteEncoderId;
@@ -70,12 +73,16 @@ public class SwerveModule {
      */
     public SwerveModule(
             MotorLocation motorLocation, int driveMotorId, int turnMotorId, int absoluteEncoderId,
-            boolean absoluteEncoderReversed, SparkMaxConfig driveMaxConfig, SparkMaxConfig turnMaxConfig,
+            boolean absoluteEncoderReversed, boolean driveEncoderReversed, boolean turnEncoderReversed,
+            SparkMaxConfig driveMaxConfig, SparkMaxConfig turnMaxConfig,
             double absoluteEncoderOffset, double pTurn, double iTurn, double dTurn, double staticTurn) {
 
         // Init variables
         this.motorLocation = motorLocation;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
+        this.driveEncoderReversed = driveEncoderReversed;
+        this.turnEncoderReversed = turnEncoderReversed;
+
         absoluteEncoderOffsetRad = absoluteEncoderOffset;
         absoluteEncoder = new CANcoder(absoluteEncoderId);
 
@@ -158,7 +165,7 @@ public class SwerveModule {
      * @return double of the drive motor's encoder value convereted
      */
     public double getDrivePosition() {
-        return driveEncoder.getPosition();
+        return driveEncoder.getPosition() * (driveEncoderReversed ? -1.0 : 1.0);
     }
 
     /**
@@ -195,7 +202,7 @@ public class SwerveModule {
      * @return double of turn motor's encoder value converted
      */
     public double getTurnPosition() {
-        return turnEncoder.getPosition();
+        return turnEncoder.getPosition() * (turnEncoderReversed ? -1.0 : 1.0);
     }
 
     /**
@@ -204,7 +211,7 @@ public class SwerveModule {
      * @return double of velocity of the turn module converted
      */
     public double getTurnVelocity() {
-        return driveEncoder.getVelocity();
+        return turnEncoder.getVelocity();
     }
 
     /**
@@ -284,6 +291,7 @@ public class SwerveModule {
         // Position of Drive and Turn Motors
         SmartDashboard.putNumber(motorLocation + " driver encoder", getDrivePosition());
         SmartDashboard.putNumber(motorLocation + " turn encoder", getTurnPosition());
+        SmartDashboard.putNumber(motorLocation + " absolute encoder", getAbsoluteEncoderRad());
 
         // To change static voltage applied to the turn motor
         staticTurn = SmartDashboard.getNumber(motorLocation + " STATIC", 0);

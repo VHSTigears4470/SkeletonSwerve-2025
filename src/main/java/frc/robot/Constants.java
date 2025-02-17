@@ -84,8 +84,8 @@ public final class Constants {
     public static final int FRONT_RIGHT_DRIVE_MOTOR_PORT = 6; // Check 6
     public static final int BACK_RIGHT_DRIVE_MOTOR_PORT = 8; // Check 8
 
-    public static final boolean BACK_LEFT_DRIVE_REVERSED = true; // Check / Modify
-    public static final boolean FRONT_LEFT_DRIVE_REVERSED = true; // Check / Modify
+    public static final boolean BACK_LEFT_DRIVE_REVERSED = false; // Check / Modify
+    public static final boolean FRONT_LEFT_DRIVE_REVERSED = false; // Check / Modify
     public static final boolean FRONT_RIGHT_DRIVE_REVERSED = false; // Check / Modify
     public static final boolean BACK_RIGHT_DRIVE_REVERSED = false; // Check / Modify
 
@@ -122,10 +122,10 @@ public final class Constants {
     public static final int FRONT_RIGHT_TURN_MOTOR_PORT = 5; // Right // 0.22 // 0.36, 0.45
     public static final int BACK_RIGHT_TURN_MOTOR_PORT = 7; // Right // 0.225 // 0.366, 0.38
 
-    public static final boolean BACK_LEFT_TURN_REVERSED = true; // Check / Modify
-    public static final boolean FRONT_LEFT_TURN_REVERSED = true; // Check / Modify
-    public static final boolean FRONT_RIGHT_TURN_REVERSED = true; // Check / Modify
-    public static final boolean BACK_RIGHT_TURN_REVERSED = true; // Check / Modify
+    public static final boolean BACK_LEFT_TURN_REVERSED = false; // Check / Modify
+    public static final boolean FRONT_LEFT_TURN_REVERSED = false; // Check / Modify
+    public static final boolean FRONT_RIGHT_TURN_REVERSED = false; // Check / Modify
+    public static final boolean BACK_RIGHT_TURN_REVERSED = false; // Check / Modify
 
     // Encoder Values
     public static final int BACK_LEFT_TURN_ABSOLUTE_ENCODER_PORT = 12; // Check
