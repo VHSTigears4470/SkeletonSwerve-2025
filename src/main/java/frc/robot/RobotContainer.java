@@ -79,7 +79,7 @@ public class RobotContainer {
                 // !m_driverController.button(OIConstants.DRIVER_FIELD_ORIENTED_BUTTON_IDX).getAsBoolean()
                 // ));
 
-                int preset = 2;
+                int preset = 3;
                 switch (preset) {
                         case 0:
                                 controllerPresetMain();
@@ -89,6 +89,9 @@ public class RobotContainer {
                                 break;
                         case 2:
                                 controllerPresetTwo();
+                                break;
+                        case 3:
+                                controllerPresetThree();
                                 break;
                         default:
                                 controllerPresetMain();
@@ -368,5 +371,121 @@ public class RobotContainer {
                 m_driverController.start().whileTrue(
                                 new TestDrivingMotors(m_swerveSub,
                                                 0.10 * SwervePhysicalConstants.PHYSICAL_MAX_SPEED_METER_PER_SECOND));
+        }
+
+        /**
+         * Testing Swerve On Field
+         * Does the following:
+         * Hold Right Trigger + Joysticks : Move Robot Field Relative
+         * 
+         * Right Bumper : Command Drive Wheels Only (Forwards)
+         * Left Bumper : Command Drive Wheels Only (Backwards)
+         * 
+         * Button B : Move Right
+         * Button X : Move Left
+         * Button Y : Move Forward
+         * Button A : Move Backward
+         * 
+         * Left Trigger + B : Reset Odom + Gyro
+         * Left Trigger + X : Make Wheels Pointed Straight
+         * Left Trigger + Y : Make Wheels Poinsted Right
+         * 
+         * Start Button : Move Wheels In Whatever Direction they're facing at 10% max
+         * speed
+         */
+
+        public void controllerPresetThree() {
+                // Joystick but field relative rather than robot relative
+                m_driverController.rightTrigger().whileTrue(
+                        new SwerveJoystickCommand(
+                                m_swerveSub,
+                                () -> m_driverController.getRawAxis(IOConstants.DRIVER_Y_AXIS),
+                                () -> m_driverController.getRawAxis(IOConstants.DRIVER_X_AXIS),
+                                () -> m_driverController.getRawAxis(IOConstants.DRIVER_ROT_AXIS),
+                                () -> true
+                        )      
+                );
+
+                // Move only driving motors forwards
+                m_driverController.rightBumper().whileTrue(
+                        new TestDrivingMotors(m_swerveSub, 0.4)      
+                );
+
+                // Move only driving motors backwards
+                m_driverController.rightBumper().whileTrue(
+                        new TestDrivingMotors(m_swerveSub, -0.4)      
+                );
+
+                // Move Forwards
+                m_driverController.y().and(m_driverController.leftTrigger().negate()).whileTrue(
+                        new TestSwerveJoystickCommand(
+                                m_swerveSub,
+                                () -> (double) -0.4,
+                                () -> (double) 0.0,
+                                () -> (double) 0.0,
+                                () -> (boolean) false,
+                                false,
+                                "Forward Movement"
+                        )
+                );
+
+                // Move Backwards
+                m_driverController.a().and(m_driverController.leftTrigger().negate()).whileTrue(
+                        new TestSwerveJoystickCommand(
+                                m_swerveSub,
+                                () -> (double) 0.4,
+                                () -> (double) 0.0,
+                                () -> (double) 0.0,
+                                () -> (boolean) false,
+                                false,
+                                "Backward Movement"
+                        )
+                );
+
+                // Move Right
+                m_driverController.b().and(m_driverController.leftTrigger().negate()).whileTrue(
+                        new TestSwerveJoystickCommand(
+                                m_swerveSub,
+                                () -> (double) 0.0,
+                                () -> (double) 0.4,
+                                () -> (double) 0.0,
+                                () -> (boolean) false,
+                                false,
+                                "Right Movement"
+                        )
+                );
+
+                // Move Left
+                m_driverController.x().and(m_driverController.leftTrigger().negate()).whileTrue(
+                        new TestSwerveJoystickCommand(
+                                m_swerveSub,
+                                () -> (double) 0.0,
+                                () -> (double) -0.4,
+                                () -> (double) 0.0,
+                                () -> (boolean) false,
+                                false,
+                                "Left Movement"
+                        )
+                );
+
+                // Reset Odom & Gyro
+                m_driverController.b().and(m_driverController.leftTrigger()).whileTrue(
+                        new InstantCommand(
+                                () -> {
+                                        m_swerveSub.zeroHeading();
+                                        m_swerveSub.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+                                },
+                                m_swerveSub
+                        )
+                );
+
+                // straight rotation
+                m_driverController.x().and(m_driverController.leftTrigger()).whileTrue(
+                                new TestSetPosCommand(m_swerveSub, 0));
+                                
+
+                // right rotation
+                m_driverController.y().and(m_driverController.leftTrigger()).whileTrue(
+                        new TestSetPosCommand(m_swerveSub, Math.PI * 0.5));
         }
 }
