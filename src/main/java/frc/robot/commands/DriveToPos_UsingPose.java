@@ -38,7 +38,7 @@ public class DriveToPos_UsingPose extends Command {
         ySpd = 0.0;
         turningSpd = 0.0;
         fieldOriented = false;
-        translation = new Transform2d(5, 0 , new Rotation2d(0));
+        translation = new Transform2d(1, 0 , new Rotation2d(0));
         this.xLimiter = new SlewRateLimiter(SwervePhysicalConstants.TELE_DRIVE_MAX_ACCELERATION_UNIT_PER_SECOND);
         this.yLimiter = new SlewRateLimiter(SwervePhysicalConstants.TELE_DRIVE_MAX_ACCELERATION_UNIT_PER_SECOND);
         this.turningLimiter = new SlewRateLimiter(SwervePhysicalConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION_UNIT_PER_SECOND);
