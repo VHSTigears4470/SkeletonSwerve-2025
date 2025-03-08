@@ -6,6 +6,7 @@ package frc.robot;
 
 
 import frc.robot.Constants.IOConstants;
+import frc.robot.Constants.OperatingConstants;
 import frc.robot.Constants.SwervePhysicalConstants;
 import frc.robot.commands.DriveToPos_UsingPose;
 import frc.robot.commands.SwerveJoystickCommand;
@@ -13,6 +14,8 @@ import frc.robot.commands.TestDrivingMotors;
 import frc.robot.commands.TestSetPosCommand;
 import frc.robot.commands.TestSwerveJoystickCommand;
 import frc.robot.commands.TestTurningMotors;
+import frc.robot.commands.KitbotCoralCommands.OutputCoral;
+import frc.robot.subsystems.KitbotCoralSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
         // The robot's subsystems and commands are defined here...
         SwerveSubsystem m_swerveSub = new SwerveSubsystem();
+        private KitbotCoralSubsystem m_kitbotcoralSub = OperatingConstants.k_usingKitbotCoral ? new KitbotCoralSubsystem() : null;
 
         // Replace with CommandPS4Controller or CommandJoystick if needed
         private final CommandXboxController m_driverController = new CommandXboxController(
@@ -79,7 +83,7 @@ public class RobotContainer {
                 // !m_driverController.button(OIConstants.DRIVER_FIELD_ORIENTED_BUTTON_IDX).getAsBoolean()
                 // ));
 
-                int preset = 3;
+                int preset = 4;
                 switch (preset) {
                         case 0:
                                 controllerPresetMain();
@@ -93,6 +97,8 @@ public class RobotContainer {
                         case 3:
                                 controllerPresetThree();
                                 break;
+                        case 4:
+                                controllerPresetFour(); // Using Kitbot Coral
                         default:
                                 controllerPresetMain();
                                 break;
@@ -487,5 +493,44 @@ public class RobotContainer {
                 // right rotation
                 m_driverController.y().and(m_driverController.leftTrigger()).whileTrue(
                         new TestSetPosCommand(m_swerveSub, Math.PI * 0.5));
+        }
+
+        /**
+         * Testing Swerve On Field
+         * Does the following:
+         * Hold Right Trigger + Joysticks : Move Robot Field Relative
+         * 
+         * B : Reset Odom + Gyro
+         * Left Trigger : Output Coral
+         * Left Bumper : Input Coral s
+         */
+
+        public void controllerPresetFour() {
+                // Joystick but field relative rather than robot relative
+                m_driverController.rightTrigger().whileTrue(
+                        new SwerveJoystickCommand(
+                                m_swerveSub,
+                                () -> m_driverController.getRawAxis(IOConstants.DRIVER_Y_AXIS),
+                                () -> m_driverController.getRawAxis(IOConstants.DRIVER_X_AXIS),
+                                () -> m_driverController.getRawAxis(IOConstants.DRIVER_ROT_AXIS),
+                                () -> true
+                        )      
+                );
+
+                // Reset Odom & Gyro
+                m_driverController.b().and(m_driverController.leftTrigger()).whileTrue(
+                        new InstantCommand(
+                                () -> {
+                                        m_swerveSub.zeroHeading();
+                                        m_swerveSub.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+                                },
+                                m_swerveSub
+                        )
+                );
+
+                if(OperatingConstants.k_usingKitbotCoral) {
+                        m_driverController.leftTrigger().whileTrue(new OutputCoral(m_kitbotcoralSub));
+                        m_driverController.leftBumper().whileTrue(new OutputCoral(m_kitbotcoralSub));
+                } 
         }
 }

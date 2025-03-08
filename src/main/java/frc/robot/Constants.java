@@ -223,4 +223,13 @@ public final class Constants {
             MAX_ANGULAR_SPEED_RADIAN_PER_SECOND,
             MAX_ANGULAR_ACCELERATION_RADIAN_PER_SECOND_SQUARED);
   }
+
+  public static final class KitbotCoralConstants {
+    public static final int k_outputMotorID = 1;
+    public static final double k_speed = 0.4; 
+  }
+
+  public static final class OperatingConstants {
+    public static final boolean k_usingKitbotCoral = true;
+  }
 }
